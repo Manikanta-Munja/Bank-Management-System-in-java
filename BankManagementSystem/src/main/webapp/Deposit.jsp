@@ -1,0 +1,60 @@
+<%@ page session="true" %>
+<%
+    if (session.getAttribute("username") == null) {
+        response.sendRedirect("login.jsp?error=Please login first");
+        return;
+    }
+%>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Deposit Money</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="dashboard">MyBank</a>
+        <div class="d-flex">
+            <span class="navbar-text text-white me-3">
+                Welcome, <%= session.getAttribute("username") %>
+            </span>
+            <a href="logout" class="btn btn-danger">Logout</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4>Deposit Money</h4>
+                </div>
+                <div class="card-body">
+                    <form action="deposit" method="post">
+                        <div class="mb-3">
+                            <label class="form-label">Amount</label>
+                            <input type="number" name="amount" step="0.01" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100"><i class="bi bi-cash-stack me-2"></i>Deposit</button>
+                    </form>
+
+                    <% if(request.getParameter("msg") != null) { %>
+                        <div class="alert alert-success mt-3"><%= request.getParameter("msg") %></div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
